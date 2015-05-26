@@ -30,6 +30,7 @@
     "engine.io": "^1.5.1",
     "findhit-class": "^0.1.1",
     "findhit-util": "^0.2.7",
+    "msgpack": "^0.2.6",
     "redis": "^0.12.1"
   }
 }
