@@ -27,10 +27,16 @@
   },
   "homepage": "https://github.com/realizehit/websocket-server",
   "dependencies": {
+    "requirehit-subscription": "latest",
     "engine.io": "^1.5.1",
     "findhit-class": "^0.1.1",
     "findhit-util": "^0.2.7",
     "msgpack": "^0.2.6",
     "redis": "^0.12.1"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "engine.io-client": "^1.5.1",
+    "mocha": "^2.2.5"
   }
 }
