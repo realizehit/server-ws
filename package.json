@@ -4,7 +4,7 @@
   "description": "realizehit websocket server",
   "main": "lib/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha --globals setImmediate,clearImmediate --check-leaks --colors -t 4000 --reporter spec $(find test/* -name '*.test.js')"
   },
   "repository": {
     "type": "git",
@@ -27,12 +27,13 @@
   },
   "homepage": "https://github.com/realizehit/websocket-server",
   "dependencies": {
-    "requirehit-subscription": "latest",
+    "debug": "^2.2.0",
     "engine.io": "^1.5.1",
     "findhit-class": "^0.1.1",
     "findhit-util": "^0.2.7",
     "msgpack": "^0.2.6",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "requirehit-subscription": "latest"
   },
   "devDependencies": {
     "chai": "^3.0.0",

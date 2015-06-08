@@ -22,10 +22,10 @@
         1. Server: creates a subscription to handle it
 3. Server: checks if client is subscribed on provided pattern
     1. Server: if already subscribed
-        1. Server: sends error message to Other party
+        1. Server: sends error message to Other party *action:...* *pattern:...* *status:false*
     2. Server: if not subscribed
         1. Adds client to subscription
-        2. Sends a status set to Other party
+        2. Sends a status set to Other party *action:...* *pattern:...* *status:true*
 
 
 ### Unsubscribing
