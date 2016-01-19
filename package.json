@@ -1,43 +1,50 @@
 {
-  "name": "realizehit-websocket-server",
-  "version": "1.0.0",
+  "name": "realizehit-server-ws",
+  "version": "1.0.1",
   "description": "realizehit websocket server",
-  "main": "lib/server.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --globals setImmediate,clearImmediate --check-leaks --colors -t 4000 --reporter spec $(find test/* -name '*.test.js')"
+    "start": "node server.js",
+    "test-jshint": "jshint .",
+    "test-mocha": "mocha --globals setImmediate,clearImmediate --check-leaks --colors -t 10000 --reporter spec $(find test/* -name '*.test.js')",
+    "test": "for kind in jshint mocha; do npm run test-$kind; [ $? -ne 0 ] && exit 1; done; exit 0",
+    "preversion": "docker ps > /dev/null && npm test",
+    "postversion": "git push origin master && git push origin --tags && npm publish && npm run build-docker && npm run publish-docker && npm run publish-docker-latest",
+    "build-docker": "docker build -t realizehit/server-ws:$npm_package_version .",
+    "start-docker": "docker run -ti realizehit/server-ws:$npm_package_version",
+    "publish-docker": "docker push realizehit/server-ws:$npm_package_version",
+    "publish-docker-latest": "docker tag -f realizehit/server-ws:$npm_package_version realizehit/server-ws:latest && docker push realizehit/server-ws:latest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/realizehit/websocket-server.git"
+    "url": "git+https://github.com/realizehit/server-ws.git"
   },
   "keywords": [
     "realizehit",
-    "realtime",
-    "socket",
+    "ws",
     "websocket",
     "server",
-    "pusher",
-    "like",
-    "push"
+    "redis"
   ],
   "author": "José Moreira <jose.moreira@findhit.com>",
-  "license": "GPL v3",
+  "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/realizehit/websocket-server/issues"
+    "url": "https://github.com/realizehit/server-ws/issues"
   },
-  "homepage": "https://github.com/realizehit/websocket-server",
+  "homepage": "https://github.com/realizehit/server-ws#readme",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "debug": "^2.2.0",
-    "engine.io": "^1.5.1",
-    "findhit-class": "^0.1.1",
-    "findhit-util": "^0.2.7",
-    "msgpack": "^0.2.6",
-    "redis": "^0.12.1",
-    "requirehit-subscription": "latest"
+    "engine.io": "^1.6.7",
+    "ioredis": "^1.14.0",
+    "object-assign": "^4.0.1",
+    "realizehit-subscription": "^0.1.2",
+    "uniqid": "^1.0.0"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
-    "engine.io-client": "^1.5.1",
-    "mocha": "^2.2.5"
+    "chai": "^3.4.1",
+    "engine.io-client": "^1.6.7",
+    "jshint": "^2.9.1",
+    "mocha": "^2.3.4"
   }
 }
