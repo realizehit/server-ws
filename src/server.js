@@ -38,7 +38,7 @@ function WSServer ( options ) {
         http.createServer().listen( options.httpPort )
 
     // Setup engine.io server
-    var engine = this.engine = EngineIO.attach( this.http )
+    var engine = this.engine = EngineIO.attach( this.http, { path: '/ws' })
     engine.on( 'connection', function ( socket ) {
         var client = new Client( socket, self )
         self.emit( 'connection', client )

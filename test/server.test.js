@@ -20,7 +20,10 @@ describe( 'WSServer', function () {
             httpServer: httpServer
         })
 
-        var client = context.client = new EngineIOClient( 'ws://localhost:' + httpPort )
+        var client = context.client = new EngineIOClient(
+            'ws://localhost:' + httpPort,
+            { path: '/ws' }
+        )
 
         return Promise.all([
             new Promise(function ( fulfill, reject ) {
