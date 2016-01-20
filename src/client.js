@@ -15,11 +15,14 @@ function Client ( socket ) {
     this.subscriptions = {}
 
     // Message dispatcher
-    socket.on( 'message', function ( message ) {
-        var id = message.id || uniqid()
+    socket.on( 'message', function ( rawMessage ) {
+        var id // this should stick as closure for beeing used inside the promise
 
-        Promise.cast( message )
+        Promise.cast( rawMessage )
         .then( JSON.parse )
+        .tap(function ( parsedMessage ) {
+            id = parsedMessage.id || uniqid()
+        })
         .then( self.dispatcher.bind( self ) )
         .then(
             function ( value ) {
@@ -57,12 +60,12 @@ module.exports = Client
 
 
 Client.prototype.dispatcher = function ( message ) {
-    switch( message.action ) {
-        case 'subscribe':
-            return this.subscribe( message.pattern )
+    switch( message.act ) {
+        case 'sub':
+            return this.subscribe( message.pat )
 
-        case 'unsubscribe':
-            return this.unsubscribe( message.pattern )
+        case 'unsub':
+            return this.unsubscribe( message.pat )
     }
 
     return Promise.reject( new Error( "Unable to attend request" ) )

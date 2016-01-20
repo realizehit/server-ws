@@ -68,7 +68,7 @@ function WSServer ( options ) {
         subscription.emit( 'message' )
     })
 
-    debug( "Server initialized with options", self.options )
+    debug( "Server initialized with options", options )
 }
 
 module.exports = WSServer

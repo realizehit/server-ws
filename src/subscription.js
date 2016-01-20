@@ -39,9 +39,10 @@ Subscription.pattern2ID = require( './util/subscription.pattern2id' )
 
 Subscription.prototype.redis = function () {
     if ( ! this.server ) {
-        return this.emit( 'error', new Error(
+        this.emit( 'error', new Error(
             'Could not access to server from this context, this should not happen'
         ))
+        return
     }
 
     return this.server.redis
@@ -84,7 +85,7 @@ Subscription.prototype.unsubscribe = function () {
 
     debug( "Unsubscribing from %s", channel )
 
-    return redis().unsubscribe( channel )
+    return redis.unsubscribe( channel )
     .then(function () {
         self.status = Subscription.STATUS.UNSUBSCRIBED
         self.emit( 'unsubscribed' )
