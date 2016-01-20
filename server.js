@@ -13,9 +13,3 @@ var server = new WSServer({
 
 console.log( 'Server initialized on port ' + HTTP_PORT )
 console.log( 'It should be accessed over ' + ENDPOINT )
-
-setInterval(function () {
-    console.log( '----' )
-    console.log( 'clients: ' + Object.keys( server.clients ).length )
-    console.log( 'subscription: ' + Object.keys( server.subscriptions ).length )
-}, 1000 )
