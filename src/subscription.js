@@ -1,6 +1,5 @@
 var RHSubscription = require( 'realizehit-subscription' )
 var Promise = require( 'bluebird' )
-var crypto = require( 'crypto' )
 
 var debug = require( 'debug' )( 'realizehit:ws:subscription' )
 
@@ -32,8 +31,6 @@ Subscription.Pattern = RHSubscription.Pattern
 Subscription.prototype = Object.create( RHSubscription.prototype )
 
 module.exports = Subscription
-
-Subscription.pattern2ID = require( './util/subscription.pattern2id' )
 
 // Prototype methods
 

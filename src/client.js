@@ -1,7 +1,7 @@
 var EventEmitter = require( 'events' ).EventEmitter
 var uniqid = require( 'uniqid' )
 var Promise = require( 'bluebird' )
-var pattern2ID = require( './util/subscription.pattern2id' )
+var pattern2id = require( 'realizehit-pattern-to-id' )
 
 var debug = require( 'debug' )( 'realizehit:ws:client' )
 
@@ -88,7 +88,7 @@ Client.prototype.subscribe = function ( pattern ) {
 
 Client.prototype.unsubscribe = function ( pattern ) {
     var self = this
-    var _id = pattern2ID( pattern )
+    var _id = pattern2id( pattern )
 
     // this should fetch an already subscribed on self.subscriptions
     var subscription = self.subscriptions[ _id ]

@@ -7,7 +7,7 @@ var Client = require( './client' )
 var Pattern = Subscription.Pattern
 var Promise = require( 'bluebird' )
 var EngineIO = require( 'engine.io' )
-var pattern2ID = require( './util/subscription.pattern2id' )
+var pattern2id = require( 'realizehit-pattern-to-id' )
 
 var debug = require( 'debug' )( 'realizehit:ws:server' )
 
@@ -55,7 +55,7 @@ function WSServer ( options ) {
     // Setup Redis sub client
     var redis = this.redis = new Redis( options.redis )
     redis.on( 'message', function ( channel, message ) {
-        var _id = pattern2ID( channel )
+        var _id = pattern2id( channel )
         var subscription = this.subscriptions[ _id ]
 
         if ( ! subscription ) {
@@ -77,7 +77,7 @@ WSServer.prototype = Object.create( EventEmitter.prototype )
 
 WSServer.prototype.getSubscription = function ( pattern ) {
     var self = this
-    var _id = pattern2ID( pattern )
+    var _id = pattern2id( pattern )
 
     debug( "Gathering subscription for id %s", _id )
 
