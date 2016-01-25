@@ -9,10 +9,17 @@ function Subscription ( pattern ) {
     // Init it with realizehit-subscription
     RHSubscription.call( this, pattern )
 
-    // Count how many messages have we served
-    self.messages = 0
-    this.on( 'message', function () {
-        self.messages++
+    // Count how many payloads have we served
+    self.payloads = 0
+    this.on( 'payload', function ( payload ) {
+        self.payloads++
+
+        // Re-emit payloads to all clients
+        Promise.cast( Object.keys( self.clients ) )
+        .each(function ( clientId ) {
+            var client = self.clients[ clientId ]
+            client.payloadDispatcher( self, payload )
+        })
     })
 
     // Prepare object for bindings with clients

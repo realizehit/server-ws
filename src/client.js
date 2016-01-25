@@ -14,7 +14,7 @@ function Client ( socket ) {
     // Setup holder for subscriptions
     this.subscriptions = {}
 
-    // Message dispatcher
+    // Message actionDispatcher
     socket.on( 'message', function ( rawMessage ) {
         var id // this should stick as closure for beeing used inside the promise
 
@@ -23,7 +23,7 @@ function Client ( socket ) {
         .tap(function ( parsedMessage ) {
             id = parsedMessage.id || uniqid()
         })
-        .then( self.dispatcher.bind( self ) )
+        .then( self.actionDispatcher.bind( self ) )
         .then(
             function ( value ) {
                 return {
@@ -59,7 +59,7 @@ Client.prototype = Object.create( EventEmitter.prototype )
 module.exports = Client
 
 
-Client.prototype.dispatcher = function ( message ) {
+Client.prototype.actionDispatcher = function ( message ) {
     switch( message.act ) {
         case 'sub':
             return this.subscribe( message.pat )
@@ -69,6 +69,14 @@ Client.prototype.dispatcher = function ( message ) {
     }
 
     return Promise.reject( new Error( "Unable to attend request" ) )
+}
+
+Client.prototype.payloadDispatcher = function ( subscription, payload ) {
+    this.socket.send(
+        subscription.id +
+        this.server.options.subpayJoinerChar +
+        payload
+    )
 }
 
 Client.prototype.subscribe = function ( pattern ) {

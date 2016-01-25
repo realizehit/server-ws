@@ -16,6 +16,7 @@ var defaultOptions = {
     httpPort: 8080,
     httpPrefix: '/',
     redis: 'redis://localhost:6379',
+    subpayJoinerChar: '?'
 }
 
 function WSServer ( options ) {
@@ -30,7 +31,7 @@ function WSServer ( options ) {
     this.clients = {}
 
     options = typeof options === 'object' && options || {}
-    options = assign( {}, defaultOptions, options )
+    options = this.options = assign( {}, defaultOptions, options )
 
     // Setup HTTP server
     this.http =
@@ -54,9 +55,9 @@ function WSServer ( options ) {
 
     // Setup Redis sub client
     var redis = this.redis = new Redis( options.redis )
-    redis.on( 'message', function ( channel, message ) {
+    redis.on( 'message', function ( channel, payload ) {
         var _id = pattern2id( channel )
-        var subscription = this.subscriptions[ _id ]
+        var subscription = self.subscriptions[ _id ]
 
         if ( ! subscription ) {
             return self.emit( 'error', new Error(
@@ -65,7 +66,7 @@ function WSServer ( options ) {
         }
 
         // dispatch to subscription
-        subscription.emit( 'message' )
+        subscription.emit( 'payload', payload )
     })
 
     debug( "Server initialized with options", options )

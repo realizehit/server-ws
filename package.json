@@ -46,6 +46,7 @@
     "chai": "^3.4.1",
     "engine.io-client": "^1.6.7",
     "jshint": "^2.9.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "realizehit-publisher": "0.0.2"
   }
 }
