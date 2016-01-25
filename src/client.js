@@ -66,6 +66,9 @@ Client.prototype.actionDispatcher = function ( message ) {
 
         case 'unsub':
             return this.unsubscribe( message.pat )
+
+        case 'ping':
+            return 'pong'
     }
 
     return Promise.reject( new Error( "Unable to attend request" ) )

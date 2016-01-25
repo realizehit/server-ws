@@ -66,7 +66,7 @@ describe( 'WSServer', function () {
             client.on( 'close', fulfill )
             client.close()
         }))
-        .delay( 35 )
+        .delay( 50 )
         .then(function () {
             expect( Object.keys( server.clients ) ).to.have.length( 0 )
         })
@@ -75,11 +75,12 @@ describe( 'WSServer', function () {
     it( "should reply with the same provided id", function () {
         var id = uniqid()
 
-        return Promise.cast({ id: id })
+        return Promise.cast({ id: id, act: 'ping' })
         .then( sendAndWaitForMessage.bind( this ) )
         .then(function ( res ) {
             expect( typeof res ).to.be.equal( 'object' )
             expect( res.id ).to.be.equal( id )
+            expect( res.err ).to.be.equal( undefined )
         })
     })
 
@@ -97,6 +98,7 @@ describe( 'WSServer', function () {
         .then( sendAndWaitForMessage.bind( this ) )
         .then(function ( res ) {
             expect( typeof res ).to.be.equal( 'object' )
+            expect( res.err ).to.be.equal( undefined )
         })
     })
 
@@ -117,6 +119,7 @@ describe( 'WSServer', function () {
         .then( sendAndWaitForMessage.bind( this ) )
         .then(function ( res ) {
             expect( typeof res ).to.be.equal( 'object' )
+            expect( res.err ).to.be.equal( undefined )
         })
         .then(function () {
             var publisher = new Publisher()
@@ -126,6 +129,7 @@ describe( 'WSServer', function () {
                     // Divide subpay to test if they're correct
                     fulfill( subpay.split( subpayJoinerChar, 2 ) )
                 })
+
                 publisher.publish( pattern, payload )
             })
         })
@@ -152,6 +156,7 @@ describe( 'WSServer', function () {
         .then( sendAndWaitForMessage.bind( this ) )
         .then(function ( res ) {
             expect( typeof res ).to.be.equal( 'object' )
+            expect( res.err ).to.be.equal( undefined )
             expect( Object.keys( context.server.subscriptions ) ).to.have.length( 1 )
         })
         .then(function () {
@@ -163,6 +168,7 @@ describe( 'WSServer', function () {
         .then( sendAndWaitForMessage.bind( this ) )
         .then(function ( res ) {
             expect( typeof res ).to.be.equal( 'object' )
+            expect( res.err ).to.be.equal( undefined )
             expect( Object.keys( context.server.subscriptions ) ).to.have.length( 0 )
         })
         .then(function () {

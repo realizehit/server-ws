@@ -38,7 +38,7 @@
     "engine.io": "^1.6.7",
     "ioredis": "^1.14.0",
     "object-assign": "^4.0.1",
-    "realizehit-pattern-to-id": "^1.0.0",
+    "realizehit-pattern-to-id": "^1.0.2",
     "realizehit-subscription": "^0.1.2",
     "uniqid": "^1.0.0"
   },
