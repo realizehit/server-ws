@@ -3,7 +3,7 @@ var uniqid = require( 'uniqid' )
 var Promise = require( 'bluebird' )
 var pattern2id = require( 'realizehit-pattern-to-id' )
 
-var debug = require( 'debug' )( 'realizehit:ws:client' )
+var debug = require( 'debug' )( 'realizehit:server-ws:client' )
 
 function Client ( socket ) {
     var self = this

@@ -1,7 +1,7 @@
 var RHSubscription = require( 'realizehit-subscription' )
 var Promise = require( 'bluebird' )
 
-var debug = require( 'debug' )( 'realizehit:ws:subscription' )
+var debug = require( 'debug' )( 'realizehit:server-ws:subscription' )
 
 function Subscription ( pattern ) {
     var self = this

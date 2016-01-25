@@ -9,7 +9,7 @@ var Promise = require( 'bluebird' )
 var EngineIO = require( 'engine.io' )
 var pattern2id = require( 'realizehit-pattern-to-id' )
 
-var debug = require( 'debug' )( 'realizehit:ws:server' )
+var debug = require( 'debug' )( 'realizehit:server-ws:server' )
 
 var defaultOptions = {
     httpServer: false,
